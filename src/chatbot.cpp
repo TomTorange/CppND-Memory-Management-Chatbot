@@ -44,7 +44,57 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+   ~ChatBot::ChatBot() // 1 : destructor
+    {
+        std::cout << "DELETING instance of ChatBot at " << this << std::endl;
+        delete[] _data;
+    }
 
+    ChatBot::ChatBot(const ChatBot &source) // 2 : copy constructor
+    {
+        _size = source._size;
+        _data = new int[_size];
+        *_data = *source._data;
+        std::cout << "COPYING content of instance " << &source << " to instance " << this << std::endl;
+    }
+    
+    ChatBot::ChatBot &operator=(const ChatBot &source) // 3 : copy assignment operator
+    {
+        std::cout << "ASSIGNING content of instance " << &source << " to instance " << this << std::endl;
+        if (this == &source)
+            return *this;
+        delete[] _data;
+        _data = new int[source._size];
+        *_data = *source._data;
+        _size = source._size;
+        return *this;
+    }
+    
+    ChatBot::ChatBot(ChatBot &&source) // 4 : move constructor
+    {
+        std::cout << "MOVING (ctor) instance " << &source << " to instance " << this << std::endl;
+        _data = source._data;
+        _size = source._size;
+        source._data = nullptr;
+        source._size = 0;
+    }
+    
+    ChatBot::ChatBot &operator=(ChatBot &&source) // 5 : move assignment operator
+    {
+        std::cout << "MOVING (assign) instance " << &source << " to instance " << this << std::endl;
+        if (this == &source)
+            return *this;
+
+        delete[] _data;
+
+        _data = source._data;
+        _size = source._size;
+
+        source._data = nullptr;
+        source._size = 0;
+
+        return *this;
+    }
 ////
 //// EOF STUDENT CODE
 
