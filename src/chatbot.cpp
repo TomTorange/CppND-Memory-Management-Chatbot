@@ -2,7 +2,6 @@
 #include <random>
 #include <algorithm>
 #include <ctime>
-#include <memory>
 
 #include "chatlogic.h"
 #include "graphnode.h"
@@ -31,7 +30,7 @@ ChatBot::ChatBot(std::string filename)
     _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
 }
 
-ChatBot::~ChatBot() // 1 : destructor
+ChatBot::~ChatBot()
 {
     std::cout << "ChatBot Destructor" << std::endl;
 
@@ -45,7 +44,6 @@ ChatBot::~ChatBot() // 1 : destructor
 
 //// STUDENT CODE
 ////
-
    ChatBot::ChatBot(const ChatBot &source) // 2 : copy constructor
     {
         _image = source._image;
@@ -79,7 +77,7 @@ ChatBot::~ChatBot() // 1 : destructor
     
     ChatBot::ChatBot(ChatBot &&source) // 4 : move constructor
     {
-        std::cout << "MOVING (ctor) instance " << &source << " to instance " << this << std::endl;
+        std::cout << "MOVING (ctor) instance " << &source << " to instance " << this << std::endl;
 
         _image = source._image;
         _chatLogic = source._chatLogic;
@@ -100,7 +98,7 @@ ChatBot::~ChatBot() // 1 : destructor
         std::cout << "MOVING (assign) instance " << &source << " to instance " << this << std::endl;
         if (this == &source)
             return *this;
-        if (_image !=NULL)
+        if (source._image !=NULL)
             delete _image;
 
         _image = source._image;
